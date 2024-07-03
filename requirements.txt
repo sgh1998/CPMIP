@@ -1,3 +1,6 @@
+# Usage: pip install -r requirements.txt
+
+# Base--------------------------------------------------------
 certifi==2024.6.2
 charset-normalizer==3.3.2
 colorama==0.4.6

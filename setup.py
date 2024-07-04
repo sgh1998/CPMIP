@@ -1,6 +1,5 @@
 import os
 import yaml
-import requests
 
 def load_config(config_file="user.yaml"):
     with open(config_file, 'r') as file:
@@ -8,7 +7,7 @@ def load_config(config_file="user.yaml"):
     return config
 
 def get_full_path(major_folder, relative_path):
-    return os.path.join(major_folder, relative_path)
+    return os.path.join(major_folder, relative_path.replace('\\', '/'))
 
 def create_directories(config):
     major_folder = config['major_folder']
@@ -17,17 +16,14 @@ def create_directories(config):
     # Ensure all directories exist
     for key, path in paths.items():
         full_path = get_full_path(major_folder, path)
-        directory = os.path.dirname(full_path)
+        if os.path.splitext(full_path)[1]:  # if it's a file path
+            directory = os.path.dirname(full_path)
+        else:
+            directory = full_path
         os.makedirs(directory, exist_ok=True)
+        print(f"Directory created or already exists: {directory}")
 
-def download_file(url, save_path):
-    response = requests.get(url, stream=True)
-    response.raise_for_status()  # Check if the download was successful
-    with open(save_path, 'wb') as file:
-        for chunk in response.iter_content(chunk_size=8192):
-            file.write(chunk)
-
-def main():
+def copy_model_file():
     config = load_config()
     major_folder = config['major_folder']
     paths = config['paths']
@@ -37,13 +33,21 @@ def main():
 
     create_directories(config)
 
-    # URL for the YOLO model
-    yolo_model_url = "https://drive.google.com/uc?export=download&id=12AAP83n_-zfKLlIqsZO5M0pzBFotPyE1"
+    # Path to the model file in the repository
+    repo_model_path = os.path.join(os.path.dirname(__file__), 'trained_models', 'best.pt')
     
-    # Download the YOLO model
-    download_file(yolo_model_url, model_path)
+    if not os.path.exists(repo_model_path):
+        raise FileNotFoundError(f"Model file not found in repository: {repo_model_path}")
 
-    print("Setup complete. All directories created and files downloaded.")
+    # Copy the model file from the repository to the target directory
+    with open(repo_model_path, 'rb') as src_file:
+        with open(model_path, 'wb') as dst_file:
+            dst_file.write(src_file.read())
+    print(f"Model file copied to: {model_path}")
+
+def main():
+    copy_model_file()
+    print("Setup complete. All directories created and files copied.")
 
 if __name__ == "__main__":
     main()

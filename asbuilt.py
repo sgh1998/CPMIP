@@ -25,16 +25,25 @@ asbuilt_images = get_full_path(major_folder, paths['asbuilt_images'])
 detect_save_folder = get_full_path(major_folder, paths['detect_save_folder'])   # where detection results are saved
 output_folder_base = get_full_path(major_folder, paths['output_folder_base'])
 
-# view derection
+# View direction
 view_direction = config['view_direction'].strip().lower()  # Read view direction from config
 output_folder = os.path.join(output_folder_base, f"{view_direction}_output")  # coordinates save path
+
 # Ensure the view direction is valid
 if view_direction not in ["east", "west", "north", "south"]:
     print("Invalid view direction. Please enter one of: east, west, north, south.")
     exit()
 
+# Path to detect.py in the YOLOv5 repository
+detect_script_path = os.path.join(os.getcwd(), "yolov5", "detect.py")
+
+# Check if detect.py exists
+if not os.path.exists(detect_script_path):
+    print(f"Error: {detect_script_path} does not exist.")
+    exit()
+
 # Use the weights for detection
-command_detect = f"python detect.py --source {asbuilt_images} --weights {model_path} --conf 0.5 --hide-labels --line-thickness 1 --save-txt --nosave --project {detect_save_folder} --name exp"
+command_detect = f"python {detect_script_path} --source {asbuilt_images} --weights {model_path} --conf 0.5 --hide-labels --line-thickness 1 --save-txt --nosave --project {detect_save_folder} --name exp --device cpu"
 # Run the command
 subprocess.run(command_detect, shell=True)
 

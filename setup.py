@@ -1,5 +1,6 @@
 import os
 import yaml
+import subprocess
 
 def load_config(config_file="user.yaml"):
     with open(config_file, 'r') as file:
@@ -45,9 +46,18 @@ def copy_model_file():
             dst_file.write(src_file.read())
     print(f"Model file copied to: {model_path}")
 
-def main():
+def clone_yolov5(repo_url="https://github.com/ultralytics/yolov5.git", clone_dir="yolov5"):
+    if not os.path.exists(clone_dir):
+        print(f"Cloning YOLOv5 repository into {clone_dir}...")
+        subprocess.run(["git", "clone", repo_url, clone_dir], check=True)
+        print("YOLOv5 repository cloned successfully.")
+    else:
+        print(f"YOLOv5 repository already exists in {clone_dir}.")
+
+def setup():
+    clone_yolov5()
     copy_model_file()
-    print("Setup complete. All directories created and files copied.")
+    print("Setup complete. All directories created, files copied, and YOLOv5 repository cloned.")
 
 if __name__ == "__main__":
-    main()
+    setup()

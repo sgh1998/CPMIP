@@ -1,7 +1,7 @@
 # The user should modify the following lines specific to his system:
 
 # Base folder for all relative paths
-major_folder: "F:/CPMIP_Data" 
+major_folder: "G:/CPMIP_Data" 
 
 # The following section is used by code: DO NOT CHANGE IT
 paths:

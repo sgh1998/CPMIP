@@ -28,6 +28,7 @@ east_txt_path = get_full_path(major_folder, paths['east_txt_path'])
 west_txt_path = get_full_path(major_folder, paths['west_txt_path'])
 north_txt_path = get_full_path(major_folder, paths['north_txt_path'])
 south_txt_path = get_full_path(major_folder, paths['south_txt_path'])
+view_direction = config['view_direction'].strip().lower()  # Read view direction from config
 
 # Extract and Calculate coordinates for columns
 ifc_file = ifcopenshell.open(ifc_file_path)
@@ -144,7 +145,121 @@ def save_to_file(filename, data):
         for entry in data:
             file.write(', '.join(map(str, entry)) + '\n')
 
-save_to_file(east_txt_path, outlier_east_col)
-save_to_file(west_txt_path, outlier_west_col)
-save_to_file(north_txt_path, outlier_north_col)
-save_to_file(south_txt_path, outlier_south_col)
+#save_to_file(east_txt_path, outlier_east_col)
+#save_to_file(west_txt_path, outlier_west_col)
+#save_to_file(north_txt_path, outlier_north_col)
+#save_to_file(south_txt_path, outlier_south_col)
+
+
+# transform coordinates for east
+e_transformed_coord = []
+e_xmax = max(col[0] for col in outlier_east_col)
+e_ymax = max(col[1] for col in outlier_east_col)
+print(e_xmax)
+print(e_ymax)
+for col in outlier_east_col:
+    x , y , zt, zb, l = col
+    xt_transformed = y
+    yt_transformed = zt
+    xb_transformed = y
+    yb_transformed = zb
+    e_transformed_coord.append([xt_transformed, yt_transformed, xb_transformed, yb_transformed, l])
+print(e_transformed_coord)
+
+# transform coordinates for west
+w_transformed_coord = []
+w_xmax = max(col[0] for col in outlier_west_col)
+w_ymax = max(col[1] for col in outlier_west_col)
+print(w_xmax)
+print(w_ymax)
+for col in outlier_west_col:
+    x , y , zt, zb, l = col
+    xt_transformed = w_ymax-y
+    yt_transformed = zt
+    xb_transformed = w_ymax-y
+    yb_transformed = zb
+    w_transformed_coord.append([xt_transformed, yt_transformed, xb_transformed, yb_transformed, l])
+print(w_transformed_coord)
+
+# transform coordinates for north
+n_transformed_coord = []
+n_xmax = max(col[0] for col in outlier_north_col)
+n_ymax = max(col[1] for col in outlier_north_col)
+print(n_xmax)
+print(n_ymax)
+for col in outlier_north_col:
+    x , y , zt, zb, l = col
+    xt_transformed = n_xmax-x
+    yt_transformed = zt
+    xb_transformed = n_xmax-x
+    yb_transformed = zb
+    n_transformed_coord.append([xt_transformed, yt_transformed, xb_transformed, yb_transformed, l])
+print(n_transformed_coord)
+
+# transform coordinates for south
+s_transformed_coord = []
+s_xmax = max(col[0] for col in outlier_south_col)
+s_ymax = max(col[1] for col in outlier_south_col)
+print(s_xmax)
+print(s_ymax)
+for col in outlier_south_col:
+    x , y , zt, zb, l = col
+    xt_transformed = x
+    yt_transformed = zt
+    xb_transformed = x
+    yb_transformed = zb
+    s_transformed_coord.append([xt_transformed, yt_transformed, xb_transformed, yb_transformed, l])
+print(s_transformed_coord)
+
+
+save_to_file(east_txt_path, e_transformed_coord)
+save_to_file(west_txt_path, w_transformed_coord)
+save_to_file(north_txt_path, n_transformed_coord)
+save_to_file(south_txt_path, s_transformed_coord)
+
+
+
+
+# Draft section
+'''
+# convert coordinates based on viewpoint
+def transform_coordinates(col_list , view_direction):
+    transformed_coordinates = []
+    xmax = max(col[0] for col in col_list)
+    ymax = max(col[1] for col in col_list)
+    for coord in col_list:
+        x , y , zt, zb, l = col_list
+        if view_direction == 'east':
+            xt_transformed = y
+            yt_transformed = zt
+            xb_transformed = y
+            yb_transformed = zb
+        elif view_direction == 'west':
+            xt_transformed == ymax-y
+            yt_transformed = zt
+            xb_transformed = ymax-y
+            yb_transformed = zb
+        elif view_direction == 'north':
+            xt_transformed == xmax-x
+            yt_transformed = zt
+            xb_transformed = xmax-x
+            yb_transformed = zb
+        elif view_direction == 'south':
+            xt_transformed == x
+            yt_transformed = zt
+            xb_transformed = x
+            yb_transformed = zb
+        else:
+            raise ValueError("Invalid view direction. Use 'east', 'west', 'north', or 'south'.")
+    return
+
+
+print("*" * 20)
+print(outlier_east_col[0])
+
+e_transformed_coord = []
+for col in outlier_east_col:
+
+
+
+'''

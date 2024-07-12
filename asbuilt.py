@@ -124,7 +124,7 @@ for image_file in os.listdir(asbuilt_images):
                     x, y, w, h = map(float, data[1:5])
 
                     x = x * width
-                    y = y * height
+                    y = height - y * height # Flip the y-coordinate to be based on bottom-left corner *************************
                     w *= width
                     h *= height
                     mid_top = (x, y - h / 2)

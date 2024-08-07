@@ -17,13 +17,23 @@ def load_config(config_file="user.yaml"):
 def get_full_path(major_folder, relative_path):
     return os.path.join(major_folder, relative_path)
 
+def find_ifc_file(directory):
+    ifc_files = [f for f in os.listdir(directory) if f.endswith('.ifc')]
+    if len(ifc_files) != 1:
+        raise Exception("The IFC directory should contain exactly one IFC file.")
+    return os.path.join(directory, ifc_files[0])
+
+
 # Load configuration
 config = load_config()
 major_folder = config['major_folder']
 paths = config['paths']
 
 # Construct full paths from the major folder and relative paths
-ifc_file_path = get_full_path(major_folder, paths['ifc_model'])
+ifc_model_dir = get_full_path(major_folder, paths['ifc_model'])
+ifc_file_path = find_ifc_file(ifc_model_dir)
+
+#ifc_file_path = get_full_path(major_folder, paths['ifc_model'])
 east_txt_path = get_full_path(major_folder, paths['east_txt_path'])
 west_txt_path = get_full_path(major_folder, paths['west_txt_path'])
 north_txt_path = get_full_path(major_folder, paths['north_txt_path'])

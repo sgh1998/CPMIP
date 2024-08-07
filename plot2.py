@@ -113,7 +113,7 @@ if os.path.isdir(asbuilt_directory):
 
 
 
-    asbuilt_directory = get_full_path(major_folder, os.path.join(output_folder_base, "north_output"))
+asbuilt_directory = get_full_path(major_folder, os.path.join(output_folder_base, "north_output"))
 if os.path.isdir(asbuilt_directory):
     asbuilt_files_data = load_files_from_directory(asbuilt_directory)
 
@@ -129,5 +129,18 @@ if os.path.isdir(asbuilt_directory):
     plt.tight_layout(rect=[0, 0.03, 1, 0.95])  # Adjust layout to make room for the suptitle
     #plt.show()
 
+asbuilt_directory = get_full_path(major_folder, os.path.join(output_folder_base, "south_output"))
+if os.path.isdir(asbuilt_directory):
+    asbuilt_files_data = load_files_from_directory(asbuilt_directory)
 
+    plt.figure(figsize=(12, 8))
+    plt.suptitle('Asbuilt Data Plots from South Output Directory')
+
+    for idx, data in enumerate(asbuilt_files_data):
+        plt.subplot(1, len(asbuilt_files_data), idx + 1)
+        for xt, yt, xb, yb in data:
+            plt.plot([xt, xb], [yt, yb], marker='o', color='r')
+        plt.title(f'East Asbuilt {idx+1}')
+
+    plt.tight_layout(rect=[0, 0.03, 1, 0.95])  # Adjust layout to make room for the suptitle
 plt.show()

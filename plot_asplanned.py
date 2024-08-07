@@ -31,6 +31,8 @@ north_file = np.loadtxt(north_txt_path, delimiter=',', usecols=(0, 1, 2, 3))
 south_file = np.loadtxt(south_txt_path, delimiter=',', usecols=(0, 1, 2, 3))
 
 plt.figure(figsize=(12, 8))
+plt.suptitle('asplanned')  # Add a title to the figure
+
 
 plt.subplot(2, 2, 1)
 for xt, yt, xb, yb in east_file:

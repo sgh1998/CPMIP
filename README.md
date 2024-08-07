@@ -31,7 +31,7 @@ CPMIP automates the monitoring and inspection of construction projects using com
 
     ```sh
     python -m venv env
-    source env/bin/activate  # On Windows use `env\Scripts\activate`
+    env\Scripts\activate
     ```
 
 3. **Install Required Packages**

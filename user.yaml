@@ -1,24 +1,25 @@
 # The user should modify the following lines specific to his system:
 
 # Base folder for all relative paths
-major_folder: "D:/CPMIP_Data" 
+#major_folder: "D:/CS/case1/CPMIP_Data" 
+major_folder: "."
 
 # The following section is used by code: DO NOT CHANGE IT
 paths:
-  model: "advanced/yolo_model/best.pt"
-  asbuilt_images: "user_inputs/asbuilt_images"  # user input
-  ifc_model: "user_inputs/ifc_model/Project52.ifc"  # user input
-  detect_save_folder: "advanced/detection_results"
-  output_folder_base: "advanced/asbuilt_coordinates"
+  model: "CPMIP_Data/advanced/yolo_model/best.pt"
+  asbuilt_images: "CPMIP_Data/user_inputs/asbuilt_images"  # user input
+  ifc_model: "CPMIP_Data/user_inputs/ifc_model/Project52.ifc"  # user input
+  detect_save_folder: "CPMIP_Data/advanced/detection_results"
+  output_folder_base: "CPMIP_Data/advanced/asbuilt_coordinates"
 
 
 
 
   
-  east_txt_path: "advanced/asplanned_coordinates/east.txt"  # Path for the east output text file
-  west_txt_path: "advanced/asplanned_coordinates/west.txt"  # Path for the west output text file
-  north_txt_path: "advanced/asplanned_coordinates/north.txt"  # Path for the north output text file
-  south_txt_path: "advanced/asplanned_coordinates/south.txt"  # Path for the south output text file
+  east_txt_path: "CPMIP_Data/advanced/asplanned_coordinates/east.txt"  # Path for the east output text file
+  west_txt_path: "CPMIP_Data/advanced/asplanned_coordinates/west.txt"  # Path for the west output text file
+  north_txt_path: "CPMIP_Data/advanced/asplanned_coordinates/north.txt"  # Path for the north output text file
+  south_txt_path: "CPMIP_Data/advanced/asplanned_coordinates/south.txt"  # Path for the south output text file
 
 # User-defined parameter for view direction (east, west, north, south)
 view_direction: "east"

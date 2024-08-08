@@ -106,7 +106,7 @@ if os.path.isdir(asbuilt_directory):
         plt.subplot(1, len(asbuilt_files_data), idx + 1)
         for xt, yt, xb, yb in data:
             plt.plot([xt, xb], [yt, yb], marker='o', color='r')
-        plt.title(f'East Asbuilt {idx+1}')
+        plt.title(f'West Asbuilt {idx+1}')
 
     plt.tight_layout(rect=[0, 0.03, 1, 0.95])  # Adjust layout to make room for the suptitle
     #plt.show()
@@ -124,7 +124,7 @@ if os.path.isdir(asbuilt_directory):
         plt.subplot(1, len(asbuilt_files_data), idx + 1)
         for xt, yt, xb, yb in data:
             plt.plot([xt, xb], [yt, yb], marker='o', color='r')
-        plt.title(f'East Asbuilt {idx+1}')
+        plt.title(f'North Asbuilt {idx+1}')
 
     plt.tight_layout(rect=[0, 0.03, 1, 0.95])  # Adjust layout to make room for the suptitle
     #plt.show()
@@ -140,7 +140,7 @@ if os.path.isdir(asbuilt_directory):
         plt.subplot(1, len(asbuilt_files_data), idx + 1)
         for xt, yt, xb, yb in data:
             plt.plot([xt, xb], [yt, yb], marker='o', color='r')
-        plt.title(f'East Asbuilt {idx+1}')
+        plt.title(f'South Asbuilt {idx+1}')
 
     plt.tight_layout(rect=[0, 0.03, 1, 0.95])  # Adjust layout to make room for the suptitle
 plt.show()

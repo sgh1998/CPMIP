@@ -1,7 +1,7 @@
 # The user should modify the following lines specific to his system:
 
 # Base folder for all relative paths
-major_folder: "D:/CS/case3/Data_CPMIP" 
+major_folder: "F:/Data_CPMIP" 
 
 # The following section is used by code: DO NOT CHANGE IT
 paths:
@@ -21,4 +21,4 @@ paths:
   south_txt_path: "advanced/asplanned_coordinates/south.txt"  # Path for the south output text file
 
 # User-defined parameter for view direction (east, west, north, south)
-view_direction: "south"
+view_direction: "east"

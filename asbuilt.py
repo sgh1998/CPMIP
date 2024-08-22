@@ -58,7 +58,6 @@ else:
 # Function to plot detected labels on images and save them
 def plot_label(folder_path, predicted_labels_folder, output_folder, view_direction):
     line_width = 0.5
-    img_counter = 1
 
     for filename in os.listdir(folder_path):
         if filename.endswith(('.jpg', '.jpeg', '.png', '.gif')):
@@ -89,12 +88,9 @@ def plot_label(folder_path, predicted_labels_folder, output_folder, view_directi
             ax.set_yticklabels([])
             ax.axis('off')
 
-            image_base_name = f'{view_direction}_{img_counter:03d}'
-            save_path = os.path.join(output_folder, f'{image_base_name}.jpeg')
+            save_path = os.path.join(output_folder, f'{filename}')
             plt.savefig(save_path, bbox_inches='tight', pad_inches=0.0, dpi=300)
             plt.close(fig)
-
-            img_counter += 1
 
 print("detection_predicted_labels_folder is", latest_detect_exp_folder)
 
@@ -104,8 +100,6 @@ os.makedirs(output_folder, exist_ok=True)
 plot_label(asbuilt_images, latest_detect_exp_folder, output_folder, view_direction)
 
 # Read labels and convert to the format
-col_coordinates = []
-img_counter = 1
 for image_file in os.listdir(asbuilt_images):
     if image_file.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')):
         image_path = os.path.join(asbuilt_images, image_file)
@@ -124,26 +118,26 @@ for image_file in os.listdir(asbuilt_images):
                     x, y, w, h = map(float, data[1:5])
 
                     x = x * width
-                    y = height - y * height # Flip the y-coordinate to be based on bottom-left corner *************************
+                    y = y * height #height - y * height # Flip the y-coordinate to be based on bottom-left corner *************************
                     w *= width
                     h *= height
-                    mid_top = (x, y - h / 2)
-                    mid_bottom = (x, y + h / 2)
+                    print('label size:', x,y,w,h)
+                    xtop = x
+                    ytop = y - h / 2
+                    xbot = x
+                    ybot = y + h / 2
+                    #from left bot  x no change
+                    ytop = height - ytop
+                    ybot = height - ybot
+                    
+                    mid_top = (xtop, ytop)
+                    mid_bottom = (xbot, ybot)
                     print("Midpoint of the top:", mid_top)
                     print("Midpoint of the bottom:", mid_bottom)
 
                     elements_coordinates.append([mid_top[0], mid_top[1], mid_bottom[0], mid_bottom[1]])
 
-        image_base_name = f'{view_direction}_{img_counter:03d}'
-        output_file_path = os.path.join(output_folder, f'{image_base_name}.txt')
+        output_file_path = os.path.join(output_folder, f'{image_file.split(".")[0]}.txt')
         with open(output_file_path, "w") as output_file:
             for coord in elements_coordinates:
                 output_file.write(f"{coord[0]}, {coord[1]}, {coord[2]}, {coord[3]}\n")
-
-        img_counter += 1
-
-'''
-The script loads a trained YOLOv5 model and performs object detection on images in a specified directory.
-It processes each image, runs inference to detect objects, applies non-maximum suppression to filter the detections, and plots bounding boxes on the images.
-Finally, it displays the processed images with detected objects and saves the coordinates to text files.
-'''

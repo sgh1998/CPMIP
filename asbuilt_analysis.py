@@ -190,4 +190,7 @@ plt.ylabel('Cluster ID')
 plt.title('X Coordinates of Columns by Cluster')
 plt.legend()
 plt.grid(True)
-plt.show()
+#plt.show()
+plt.show(block=False)  # Show the plot without blocking the execution
+plt.pause(5)           # Pause for 5 seconds
+plt.close()            # Close the plot window

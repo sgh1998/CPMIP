@@ -50,3 +50,6 @@ tzdata==2024.1
 ultralytics==8.2.48
 ultralytics-thop==2.0.0
 urllib3==2.2.2
+joblib==1.4.2
+scikit-learn==1.5.1
+threadpoolctl==3.5.0
